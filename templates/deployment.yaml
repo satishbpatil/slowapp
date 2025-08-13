@@ -22,7 +22,7 @@ spec:
         - -c
         - |
           echo "Starting slow app..."
-          sleep 30
+          sleep 120
           echo "App is now ready!"
           nginx -g 'daemon off;'
         readinessProbe:
