@@ -1,0 +1,5 @@
+apiVersion: v2
+name: slow-app
+description: Application that takes 30 seconds to become healthy
+version: 1.0.0
+appVersion: "1.0"
