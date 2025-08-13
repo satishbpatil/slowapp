@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slow-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: slow-app
+  template:
+    metadata:
+      labels:
+        app: slow-app
+    spec:
+      containers:
+      - name: slow-app
+        image: nginx:1.21
+        ports:
+        - containerPort: 80
+        command: ["/bin/sh"]
+        args:
+        - -c
+        - |
+          echo "Starting slow app..."
+          sleep 30
+          echo "App is now ready!"
+          nginx -g 'daemon off;'
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 35
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 40
+          periodSeconds: 10
